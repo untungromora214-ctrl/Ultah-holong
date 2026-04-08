@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H-1 Spesial Untukmu</title>
+    <style>
+        body { 
+            text-align: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe4e9 100%); 
+            padding: 50px 15px; 
+            color: #444;
+            min-height: 100vh;
+        }
+        .container { 
+            background: white; 
+            padding: 40px 25px; 
+            border-radius: 25px; 
+            display: inline-block; 
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 { color: #d81b60; font-size: 1.5rem; margin-bottom: 5px; }
+        #status-text { font-size: 0.9rem; letter-spacing: 2px; color: #ff80ab; font-weight: bold; text-transform: uppercase; }
+        #timer { 
+            font-size: 3rem; 
+            font-weight: 800; 
+            color: #d81b60; 
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+        /* Style untuk kata-kata romantis */
+        #romantic-quote {
+            font-style: italic;
+            color: #666;
+            min-height: 60px;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .heart { color: #e91e63; font-size: 20px; animation: beat .25s infinite alternate; display: inline-block; }
+        @keyframes beat { to { transform: scale(1.2); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="status-text">Menghitung Detik...</div>
+        <h1 id="title">Menuju Hari Spesialmu <span class="heart">❤️</span></h1>
+        
+        <div id="timer">00:00:00</div>
+        
+        <div id="romantic-quote">"Jarak hanyalah angka, tapi kasih sayangku nyata."</div>
+    </div>
+
+    <script>
+        // 1. ATUR TANGGAL ULANG TAHUN DI SINI
+        const targetDate = new Date("2026-04-09T00:00:00").getTime();
+
+        // 2. KATA-KATA ROMANTIS (Bisa kamu tambah/ubah sendiri)
+        const quotes = [
+            "Jarak mungkin memisahkan raga, tapi tidak dengan doa.",
+            "Setiap detik yang berlalu adalah satu langkah lebih dekat menuju hari bahagiamu.",
+            "Terima kasih sudah lahir ke dunia ini. Kamu adalah anugerah terindah.",
+            "Meskipun jauh, aku di sini selalu merayakan kehadiranmu di hidupku.",
+            "Tunggu sebentar lagi ya, sayang. Hari spesialmu segera tiba! 🤍",
+            "Aku berharap bisa ada di sana memelukmu saat jam 00:00."
+        ];
+
+        let quoteIndex = 0;
+        function changeQuote() {
+            const quoteElement = document.getElementById("romantic-quote");
+            quoteElement.style.opacity = 0;
+            setTimeout(() => {
+                quoteElement.innerText = `"${quotes[quoteIndex]}"`;
+                quoteElement.style.opacity = 1;
+                quoteIndex = (quoteIndex + 1) % quotes.length;
+            }, 500);
+        }
+        setInterval(changeQuote, 5000); // Ganti kutipan setiap 5 detik
+
+        // LOGIKA TIMER
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (days > 0) {
+                document.getElementById("timer").innerHTML = days + " Hari";
+                document.getElementById("status-text").innerHTML = "Segera Hadir";
+            } else {
+                document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds;
+                document.getElementById("status-text").innerHTML = "H-1: BESOK HARI SPESIALMU!";
+            }
+
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("status-text").innerHTML = "HARI INI!";
+                document.getElementById("title").innerHTML = "HAPPY BIRTHDAY SAYANG, CINTAKU, BELAHAN JIWAKU! 🎉";
+                document.getElementById("timer").innerHTML = "🤍😘";
+                document.getElementById("romantic-quote").innerHTML = "Semoga panjang umur dan bahagia selalu bersama aku.";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
+
